@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "wiki-entity-summarization"
+version = "0.1.0"
+description = "graph-based entity summarizations dataset generating from user-selected Wikipedia pages."
+authors = ["Mo Sorkhpar <Sorkhpar@outlook.com>"]
+license = "MIT License"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+networkx = "^3.2.1"
+pandas = "^2.1.3"
+neo4j = "^5.15.0"
+psycopg2-binary = "^2.9.9"
+spacy = "^3.7.2"
+numpy = "^1.26.2"
+Wikipedia-API = "^0.6.0"
+graphdatascience = "^1.8"
+matplotlib = "^3.8.2"
+bokeh = "^3.3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

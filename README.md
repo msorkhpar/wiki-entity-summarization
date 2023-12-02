@@ -47,4 +47,14 @@ comprehensive view of these entity relationships.
    git submodule init
    git submodule update
    ```
- 
+- install poetry:
+  ```shell
+  pip install poetry
+  poetry config virtualenvs.in-project true
+  poetry install --no-root
+  poetry shell
+  ```
+- local configuration:
+  ```shell
+  cp app-template.env app.env
+  ```
