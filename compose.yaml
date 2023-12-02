@@ -1,0 +1,104 @@
+services:
+  wdgb:
+    build:
+      context: .
+      dockerfile: wikidata_graph_builder/Dockerfile
+    container_name: WDGB(Wikidata Graph Builder)
+    env_file:
+      - app.env
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    links:
+      - neo4j
+      - postgres
+    volumes:
+      - wikidata-dump_files:/app/dump-files
+    networks:
+      - wiki-es-network
+
+  postgres:
+    hostname: wiki-es-pg
+    image: 'postgres:latest'
+    restart: unless-stopped
+    healthcheck:
+      test: pg_isready -U $$DB_USER
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    env_file:
+      - app.env
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    networks:
+      - wiki-es-network
+
+  neo4j:
+    hostname: wiki-es-neo
+    image: 'neo4j:5'
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "neo4j", "status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    env_file:
+      - app.env
+    volumes:
+      - neo4j-data:/data
+    ports:
+      - '7474:7474'
+      - '7687:7687'
+    networks:
+      - wiki-es-network
+
+  jupyter:
+    image: jupyter/minimal-notebook
+    hostname: wiki-es-jupyter
+    volumes:
+      - jupyter-data:/home/jovyan/work
+    environment:
+      - DOCKER_STACKS_JUPYTER_CMD=notebook
+      - NOTEBOOK_ARGS="--NotebookApp.token='wikies'"
+    restart: unless-stopped
+    ports:
+      - '8888:8888'
+    container_name: jupyter_notebook
+    networks:
+      - wiki-es-network
+
+networks:
+  wiki-es-network:
+    external: true
+
+volumes:
+  postgres-volume:
+    driver: local
+    driver_opts:
+      type: none
+      device: /data/pg-data
+      o: bind
+  neo4j-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /data/neo4j-data
+      o: bind
+  wikidata-dump-files:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /data/wikidata/articles
+
+  jupyter-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /data/jupyter-data
+      o: bind
+
