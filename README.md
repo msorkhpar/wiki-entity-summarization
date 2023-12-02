@@ -39,3 +39,11 @@ comprehensive view of these entity relationships.
 
 7. **WESC - Wiki Entity Summarization Commons (Python, Neo4j, Postgres)**:
    Utility packages and shared resources.
+
+## Getting Started
+
+- Update the submodules by executing the following:
+   ```shell
+   git submodule init
+   git submodule update
+   ```

@@ -1,0 +1,21 @@
+[submodule "wikidata_graph_builder"]
+	path = wikidata_graph_builder
+	url = https://github.com/msorkhpar/wiki-entity-summarization_wikidata-graph-builder
+[submodule "top_visited_collector"]
+	path = top_visited_collector
+	url = https://github.com/msorkhpar/wiki-entity-summarization_top-visited-wiki-pages-collector
+[submodule "wikipedia_abstract_processor"]
+	path = wikipedia_abstract_processor
+	url = https://github.com/msorkhpar/wiki-entity-summarization_wikipedia-abstract-processor
+[submodule "graph_builder"]
+	path = graph_builder
+	url = https://github.com/msorkhpar/wiki-entity-summarization_entity-summarization-graph-builder
+[submodule "graph_expander"]
+	path = graph_expander
+	url = https://github.com/msorkhpar/wiki-entity-summarization_entity-summarization-graph-expander
+[submodule "edge_refiner"]
+	path = edge_refiner
+	url = https://github.com/msorkhpar/wiki-entity-summarization_entity_entity-summarization-graph-edge-refiner
+[submodule "commons"]
+	path = commons
+	url = https://github.com/msorkhpar/wiki-entity-summarization_entity-summarization-commons
