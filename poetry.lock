@@ -795,6 +795,41 @@ files = [
 ]
 
 [[package]]
+name = "mwparserfromhell"
+version = "0.6.5"
+description = "MWParserFromHell is a parser for MediaWiki wikicode."
+optional = false
+python-versions = ">= 3.7"
+files = [
+    {file = "mwparserfromhell-0.6.5-cp310-cp310-macosx_11_0_x86_64.whl", hash = "sha256:b3a941ea35fc4fb49fc8d9087490ee8d94e09fb8e08b3bca83fc99cb4577bb81"},
+    {file = "mwparserfromhell-0.6.5-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:4a3b27580eebda2685ab5e54381df0845f13acb8ca7d50f754378184756e13bf"},
+    {file = "mwparserfromhell-0.6.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6169f314d6c28f0f373b5b2b346c51058248c8897493ed7c490db7caa65ea729"},
+    {file = "mwparserfromhell-0.6.5-cp310-cp310-win32.whl", hash = "sha256:b60e575e1e5c17a2e316b12a143de04665c4b1189a61a3a534967d33b57394cd"},
+    {file = "mwparserfromhell-0.6.5-cp310-cp310-win_amd64.whl", hash = "sha256:30747186171f6c58858c04eb617dd82dff2ae06d6f9e1b94714698daa32bc664"},
+    {file = "mwparserfromhell-0.6.5-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:837e6adf0963ddf5317f789541ea109108515ccd2405cd1437ff8224294c3fa7"},
+    {file = "mwparserfromhell-0.6.5-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:3a3ba57207582de52345e69187218bd35cf3675497fd383bc70e46c0c728d50f"},
+    {file = "mwparserfromhell-0.6.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:7984215a21b0778b90724643df24e8dbb89aecb95af2ba56a42a1956fcbeb571"},
+    {file = "mwparserfromhell-0.6.5-cp311-cp311-win32.whl", hash = "sha256:0c055324ad12c80f1ee2175c1d1b29b997aab57f6010174e704de15fdcb1757b"},
+    {file = "mwparserfromhell-0.6.5-cp311-cp311-win_amd64.whl", hash = "sha256:f252f09c4bf5432bd91a6aa79c707753ff084454cb24f8b513187531d5f6295f"},
+    {file = "mwparserfromhell-0.6.5-cp37-cp37m-macosx_11_0_x86_64.whl", hash = "sha256:61d1e01cc027fe3d94c7d3620cb6ea9648305795a66bb93747d418a15c0d1860"},
+    {file = "mwparserfromhell-0.6.5-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:4932d27cd3f00b451579c97c31e45d1e236b643bb93eeddde8d4aca50d87e3e6"},
+    {file = "mwparserfromhell-0.6.5-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:51e56993b7a351a44bdb9af7abbb72f3383fcb46f69e556f6116397598f6f3bb"},
+    {file = "mwparserfromhell-0.6.5-cp37-cp37m-win32.whl", hash = "sha256:eb1afb65e5b8a0e3eba35644347cd5304c6e7803571db042850dc0697bbe49a3"},
+    {file = "mwparserfromhell-0.6.5-cp37-cp37m-win_amd64.whl", hash = "sha256:05b8262dc13c83e023ea6d17e5e5bcef225c2c172621c71cad947958afbaf4e4"},
+    {file = "mwparserfromhell-0.6.5-cp38-cp38-macosx_11_0_x86_64.whl", hash = "sha256:7408b3ce5f0b328e86be3809e906fc378767ef5396565b7411963452ad3bbf12"},
+    {file = "mwparserfromhell-0.6.5-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:1660c5558cd9a32b3e72c0e3aabdd6729a013d8e1b5695d4bdb478f691d9657e"},
+    {file = "mwparserfromhell-0.6.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b205ce558596c35eacec863b3c88e9081872aa56b471ffd4f54162480d75f8d1"},
+    {file = "mwparserfromhell-0.6.5-cp38-cp38-win32.whl", hash = "sha256:b09a62cac76ae0cb0daef309a93ecc23d3fbcd8e68a646517c6ac8479c4cc5fe"},
+    {file = "mwparserfromhell-0.6.5-cp38-cp38-win_amd64.whl", hash = "sha256:2ecc86c6b29354adb472553bf982b6bd05fd21ac41c44d454d2aac06ca456163"},
+    {file = "mwparserfromhell-0.6.5-cp39-cp39-macosx_11_0_x86_64.whl", hash = "sha256:76234df2d138542ae839bebe53d4e4f59b286d0287101f54d1b84d9d193d5848"},
+    {file = "mwparserfromhell-0.6.5-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:b5be5f476bf4077bfc6fefcb3ccb21900f63b36c09ef0bb63667e21f09be2198"},
+    {file = "mwparserfromhell-0.6.5-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8b4d5e87d2b405eb493f86a3f0e513d4e2c30edde6b8d3b4f7d2a53ffac5d81a"},
+    {file = "mwparserfromhell-0.6.5-cp39-cp39-win32.whl", hash = "sha256:7f6e5505014d0e97e29bc01304e8f6a8d782dec55c53492cc7ca03d2a6d1e445"},
+    {file = "mwparserfromhell-0.6.5-cp39-cp39-win_amd64.whl", hash = "sha256:153243177c4c242880e9c4547880e834f01d04625ad0bc175693255dfb22dae5"},
+    {file = "mwparserfromhell-0.6.5.tar.gz", hash = "sha256:2bad0bff614576399e4470d6400ba29c52d595682a4b8de642afbb5bebf4a346"},
+]
+
+[[package]]
 name = "neo4j"
 version = "5.15.0"
 description = "Neo4j Bolt driver for Python"
@@ -1354,6 +1389,20 @@ files = [
 six = ">=1.5"
 
 [[package]]
+name = "python-dotenv"
+version = "1.0.0"
+description = "Read key-value pairs from a .env file and set them as environment variables"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "python-dotenv-1.0.0.tar.gz", hash = "sha256:a8df96034aae6d2d50a4ebe8216326c61c3eb64836776504fcca410e5937a3ba"},
+    {file = "python_dotenv-1.0.0-py3-none-any.whl", hash = "sha256:f5971a9226b701070a4bf2c38c89e5a3f0d64de8debda981d1db98583009122a"},
+]
+
+[package.extras]
+cli = ["click (>=5.0)"]
+
+[[package]]
 name = "pytz"
 version = "2023.3.post1"
 description = "World timezone definitions, modern and historical"
@@ -1891,6 +1940,20 @@ typer = ">=0.3.0,<0.10.0"
 wasabi = ">=0.9.1,<1.2.0"
 
 [[package]]
+name = "wikimapper"
+version = "0.2.0"
+description = "Mapping Wikidata and Wikipedia entities to each other"
+optional = false
+python-versions = ">=3.5.0"
+files = [
+    {file = "wikimapper-0.2.0.tar.gz", hash = "sha256:6c350a8c3f48344cdb3ffeb8feaa1681e819a4229dda1cb7d470ba5e4666495c"},
+]
+
+[package.extras]
+dev = ["black", "isort", "pygments", "twine", "wheel"]
+test = ["pytest"]
+
+[[package]]
 name = "wikipedia-api"
 version = "0.6.0"
 description = "Python Wrapper for Wikipedia"
@@ -1918,4 +1981,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "dcb1d1314a049fef181356acaba0317cd322cafa824347d9719169409b71a821"
+content-hash = "59ce4c885ec24f37e40f2c97aa525f37b93fe4dd1997a67750f1c89ded58e3eb"

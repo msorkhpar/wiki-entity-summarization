@@ -3,9 +3,16 @@ services:
     build:
       context: .
       dockerfile: wikidata_graph_builder/Dockerfile
-    container_name: WDGB(Wikidata Graph Builder)
+    container_name: wikidata_graph_builder
     env_file:
-      - app.env
+      - configs/wdgb.env
+    environment:
+      - APP_DUMPFILES_DIR=${WIKIDATA_DUMPS_PATH}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://wiki-es-pg:${DB_PORT}/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_NEO4J_AUTHENTICATION_USERNAME=${NEO4J_USER}
+      - SPRING_NEO4J_AUTHENTICATION_PASSWORD=${NEO4J_PASSWORD}
     depends_on:
       neo4j:
         condition: service_healthy
@@ -15,7 +22,23 @@ services:
       - neo4j
       - postgres
     volumes:
-      - wikidata-dump_files:/app/dump-files
+      - wikidata-dumps:${WIKIDATA_DUMPS_PATH}
+    networks:
+      - wiki-es-network
+  wpap:
+    build:
+      context: .
+      dockerfile: wikipedia_abstract_processor/Dockerfile
+    container_name: wikipedia_abstract_processor
+    env_file:
+      - configs/wpap.env
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    volumes:
+      - wikidata-dumps:/app/dump-files
     networks:
       - wiki-es-network
 
@@ -24,12 +47,16 @@ services:
     image: 'postgres:latest'
     restart: unless-stopped
     healthcheck:
-      test: pg_isready -U $$DB_USER
+      test: pg_isready -U ${DB_USER}
       interval: 10s
       timeout: 5s
       retries: 5
     env_file:
-      - app.env
+      - configs/pg.env
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - postgres-volume:/var/lib/postgresql/data
     ports:
@@ -47,7 +74,9 @@ services:
       timeout: 10s
       retries: 3
     env_file:
-      - app.env
+      - configs/neo4j.env
+    environment:
+      - NEO4J_AUTH=${NEO4J_USER}/${NEO4J_PASSWORD}
     volumes:
       - neo4j-data:/data
     ports:
@@ -61,9 +90,11 @@ services:
     hostname: wiki-es-jupyter
     volumes:
       - jupyter-data:/home/jovyan/work
+    env_file:
+      - configs/jupyter.env
     environment:
       - DOCKER_STACKS_JUPYTER_CMD=notebook
-      - NOTEBOOK_ARGS="--NotebookApp.token='wikies'"
+      - NOTEBOOK_ARGS="--NotebookApp.token='${JUPYTER_TOKEN}'"
     restart: unless-stopped
     ports:
       - '8888:8888'
@@ -80,25 +111,31 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /data/pg-data
+      device: ${POSTGRES_VOLUME_PATH}
       o: bind
   neo4j-data:
     driver: local
     driver_opts:
       type: none
-      device: /data/neo4j-data
+      device: ${NEO4J_VOLUME_PATH}
       o: bind
-  wikidata-dump-files:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: /data/wikidata/articles
 
   jupyter-data:
     driver: local
     driver_opts:
       type: none
-      device: /data/jupyter-data
+      device: ${JUPYTER_VOLUME_PATH}
       o: bind
 
+  wikidata-dumps:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${WIKIDATA_DUMPS_PATH}
+  wiki-es-output:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${OUTPUT_VOLUME_PATH}
