@@ -18,4 +18,4 @@
 	url = https://github.com/msorkhpar/wiki-entity-summarization_entity_entity-summarization-graph-edge-refiner
 [submodule "commons"]
 	path = commons
-	url = https://github.com/msorkhpar/wiki-entity-summarization_entity-summarization-commons
+	url = https://github.com/msorkhpar/wiki-entity-summarization_commons
