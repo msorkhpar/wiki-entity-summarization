@@ -21,6 +21,7 @@ bokeh = "^3.3.2"
 mwparserfromhell = "^0.6.5"
 python-dotenv = "^1.0.0"
 wikimapper = "^0.2.0"
+scipy = "^1.11.4"
 
 
 [build-system]

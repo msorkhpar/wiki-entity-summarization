@@ -2,10 +2,10 @@ import os
 import pickle
 
 from dotenv import load_dotenv
-import networkx as nx
 from top_visited_collector.tvwpc import fetch_top_visited_wikipedia_pages
 from wikipedia_abstract_processor.wpap import construct_wikipedia_abstract_graph
 from graph_builder.esgb import construct_entity_summarization_graph
+from graph_expander.eesg import construct_extended_entity_summarization_graph
 
 
 def get_path(graph_path):
@@ -40,6 +40,7 @@ if __name__ == '__main__':
         wpag = construct_wikipedia_abstract_graph(os.getenv("WIKIPEDIA_DUMPS_PATH"))
         with open(os.getenv("WPG_PICKLE_PATH"), 'wb') as f:
             pickle.dump(wpag, f)
+        print(f"WPG has been saved to `{wpg_path}`")
 
     # Entity Summarization Graph Builder
     elif app == "ESGB":
@@ -51,23 +52,39 @@ if __name__ == '__main__':
             raise FileNotFoundError(f"`{wpg_path}` does not exist! Please run `WPAP` first!")
 
         esg_path = get_path("ESG_PICKLE_PATH")
-
         with open(wpg_path, 'rb') as f:
             wpag = pickle.load(f)
 
         esg = construct_entity_summarization_graph(wpag)
         with open(esg_path, 'wb') as f:
             pickle.dump(esg, f)
+        print(f"ESG has been saved to `{esg_path}`")
 
     # Entity Summarization Graph Extender
     elif app == "ESGE":
+        load_dotenv("configs/esgb.env")
+        esg_path = get_path("ESG_PICKLE_PATH")
+        if not os.path.exists(esg_path):
+            raise FileNotFoundError(f"`{esg_path}` does not exist! Please run `ESGB` first!")
         load_dotenv("configs/esge.env")
-        pass
+
+        eesg_path = get_path("EESG_PICKLE_PATH")
+        with open(esg_path, 'rb') as f:
+            esg = pickle.load(f)
+
+        eesg = construct_extended_entity_summarization_graph(esg)
+        with open(eesg_path, 'wb') as f:
+            pickle.dump(eesg, f)
+        print(f"EESG has been saved to `{eesg_path}`")
 
     # Entity Summarization Graph Edge Refiner
     elif app == "ESGER":
+        load_dotenv("configs/esge.env")
+        eesg_path = get_path("EESG_PICKLE_PATH")
+        if not os.path.exists(eesg_path):
+            raise FileNotFoundError(f"`{eesg_path}` does not exist! Please run `ESGE` first!")
         load_dotenv("configs/esger.env")
-        pass
+        # TODO - implement ESGER
     else:
         raise ValueError(
             f'Invalid app module should be one of the following:'

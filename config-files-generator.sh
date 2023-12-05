@@ -123,6 +123,13 @@ ESG_PICKLE_PATH=\${OUTPUT_VOLUME_PATH}/entity-summarization-multi-graph.pkl
 "
 }
 
+esge_env() {
+  echo "# Entity Summarization Graph Expander
+########################################################################
+EESG_PICKLE_PATH=\${OUTPUT_VOLUME_PATH}/expanded-entity-summarization-multi-graph.pkl
+"
+}
+
 
 initialize_env() {
   echo "*************************************"
@@ -155,6 +162,7 @@ initialize_env "./configs/tvwpc.env" tvwpc_env
 initialize_env "./configs/wdgb.env" wdgb_env
 initialize_env "./configs/wpap.env" wpap_env
 initialize_env "./configs/esgb.env" esgb_env
+initialize_env "./configs/esge.env" esge_env
 
 line="id,title"
 re_file="./configs/root_entities.csv"

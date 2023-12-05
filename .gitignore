@@ -1,6 +1,7 @@
 configs/*.env
 configs/root_entities.csv
 output
+*.db
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

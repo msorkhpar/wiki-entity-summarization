@@ -29,13 +29,13 @@ comprehensive view of these entity relationships.
    and edges.
 
 5. **ESGE - Entity Summarization Graph Expander (Python, Neo4j-GDS, Postgres)**:
-   Expands ESG by sampling from WDG using the Random Walk with Restarts algorithm in the Neo4j-GDS plugin, starting from
+   Constructs **Expand Entity Summarization Graph(EESG)** by sampling from WDG using the Random Walk with Restarts algorithm in the Neo4j-GDS plugin, starting from
    the Root Entities.
 
 6. **ESGER - Entity Summarization Graph Edge Refiner (Python, Spacy-NLP, Networkx, Postgres)**:
    Refines the **Entity Summarization Graph (ESG)** by selectively retaining the most relevant edge label for each
    pair of nodes, utilizing NLP tools to evaluate and choose the most pertinent label from multiple edge labels.
-   Ultimately, transforming the ESG into a directed, labeled graph with meaningful context-based connections.
+   Ultimately, convert the heterogeneous (ESGE) graph to a labeled directed graph named **Expanded Labeled Entity Summarization Graph (ELESG)**.
 
 7. **WESC - Wiki Entity Summarization Commons (Python, Neo4j, Postgres)**:
    Utility packages and shared resources.
