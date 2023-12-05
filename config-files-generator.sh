@@ -5,8 +5,8 @@ volumes() {
 ########## Volumes ##########
 POSTGRES_VOLUME_PATH=/data/pg-data
 NEO4J_VOLUME_PATH=/data/neo4j-data
-WIKIDATA_DUMPS_PATH=/data/wikidata/articles
-WIKIPEDIA_DUMPS_PATH=/data/wikipedia/articles
+WIKIDATA_DUMPS_PATH=/data/wikidata/articles/
+WIKIPEDIA_DUMPS_PATH=/data/wikipedia/articles/
 JUPYTER_VOLUME_PATH=/data/jupyter-data
 OUTPUT_VOLUME_PATH=/data/wiki-es-output
 "
