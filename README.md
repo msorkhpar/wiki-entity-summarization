@@ -45,7 +45,7 @@ comprehensive view of these entity relationships.
 - Update the submodules by executing the following:
    ```shell
    git submodule init
-   git submodule update
+   git submodule update --init --remote --recursive
    ```
 - install poetry:
   ```shell
