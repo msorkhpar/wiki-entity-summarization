@@ -127,9 +127,10 @@ esge_env() {
   echo "# Entity Summarization Graph Expander
 ########################################################################
 EESG_PICKLE_PATH=\${OUTPUT_VOLUME_PATH}/expanded-entity-summarization-multi-graph.pkl
+EESG_WALK_LENGTH=3
+EESG_MAX_WALK_PER_NODE=200
 "
 }
-
 
 initialize_env() {
   echo "*************************************"

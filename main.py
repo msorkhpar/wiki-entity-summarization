@@ -68,11 +68,15 @@ if __name__ == '__main__':
             raise FileNotFoundError(f"`{esg_path}` does not exist! Please run `ESGB` first!")
         load_dotenv("configs/esge.env")
 
-        eesg_path = get_path("EESG_PICKLE_PATH")
         with open(esg_path, 'rb') as f:
             esg = pickle.load(f)
 
-        eesg = construct_extended_entity_summarization_graph(esg)
+
+        eesg_walk_length = int(os.getenv("EESG_WALK_LENGTH"))
+        eesg_max_walk_per_node = int(os.getenv("EESG_MAX_WALK_PER_NODE"))
+        eesg = construct_extended_entity_summarization_graph(esg, eesg_walk_length,  eesg_max_walk_per_node)
+
+        eesg_path = get_path("EESG_PICKLE_PATH")
         with open(eesg_path, 'wb') as f:
             pickle.dump(eesg, f)
         print(f"EESG has been saved to `{eesg_path}`")
