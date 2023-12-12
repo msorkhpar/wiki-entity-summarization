@@ -1,4 +1,18 @@
 services:
+  tvwpc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: top_visited_wiki_pages_collector
+    environment:
+      - APP_MODULE=TVWPC
+    volumes:
+      - wiki-es-output:${OUTPUT_VOLUME_PATH}
+      - ./.env:/app/.env
+      - ./configs/tvwpc.env:/app/configs/tvwpc.env
+    networks:
+      - wiki-es-network
+
   wdgb:
     build:
       context: .
@@ -28,20 +42,78 @@ services:
   wpap:
     build:
       context: .
-      dockerfile: wikipedia_abstract_processor/Dockerfile
+      dockerfile: Dockerfile
     container_name: wikipedia_abstract_processor
-    env_file:
-      - configs/wpap.env
+    environment:
+      - APP_MODULE=WPAP
+    volumes:
+      - wikipedia-dumps:${WIKIPEDIA_DUMPS_PATH}
+      - wiki-es-output:${OUTPUT_VOLUME_PATH}
+      - ./.env:/app/.env
+      - ./configs/wpap.env:/app/configs/wpap.env
+      - ./configs/root_entities.csv:/app/configs/root_entities.csv
+    networks:
+      - wiki-es-network
+  esgb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: entity_summarization_graph_builder
+    environment:
+      - APP_MODULE=ESGB
     depends_on:
       neo4j:
         condition: service_healthy
       postgres:
         condition: service_healthy
     volumes:
-      - wikidata-dumps:/app/dump-files
+      - wiki-es-output:${OUTPUT_VOLUME_PATH}
+      - ./.env:/app/.env
+      - ./configs/wpap.env:/app/configs/wpap.env
+      - ./configs/esgb.env:/app/configs/esgb.env
+      - ./configs/root_entities.csv:/app/configs/root_entities.csv
     networks:
       - wiki-es-network
-
+  esge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: entity_summarization_graph_expander
+    environment:
+      - APP_MODULE=ESGE
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    volumes:
+      - wiki-es-output:${OUTPUT_VOLUME_PATH}
+      - ./.env:/app/.env
+      - ./configs/esgb.env:/app/configs/esgb.env
+      - ./configs/esge.env:/app/configs/esge.env
+      - ./configs/root_entities.csv:/app/configs/root_entities.csv
+    networks:
+      - wiki-es-network
+  esger:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: entity_summarization_graph_edge_refiner
+    environment:
+      - APP_MODULE=ESGER
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    volumes:
+      - wiki-es-output:${OUTPUT_VOLUME_PATH}
+      - ./.env:/app/.env
+      - ./configs/esge.env:/app/configs/esge.env
+      - ./configs/esger.env:/app/configs/esger.env
+      - ./configs/root_entities.csv:/app/configs/root_entities.csv
+    networks:
+      - wiki-es-network
   postgres:
     hostname: wiki-es-pg
     image: 'postgres:latest'
@@ -113,6 +185,7 @@ volumes:
       type: none
       device: ${POSTGRES_VOLUME_PATH}
       o: bind
+
   neo4j-data:
     driver: local
     driver_opts:
@@ -133,6 +206,14 @@ volumes:
       o: bind
       type: none
       device: ${WIKIDATA_DUMPS_PATH}
+
+  wikipedia-dumps:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${WIKIPEDIA_DUMPS_PATH}
+
   wiki-es-output:
     driver: local
     driver_opts:

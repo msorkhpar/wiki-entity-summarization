@@ -15,8 +15,8 @@ OUTPUT_VOLUME_PATH=/data/wiki-es-output
 auths() {
   echo "
 ########## Auth ##########
-DB_NAME=esbm
-DB_USER=esbm
+DB_NAME=wikies
+DB_USER=wikies
 DB_PASSWORD=password
 NEO4J_USER=neo4j
 NEO4J_PASSWORD=password

@@ -1,0 +1,14 @@
+output
+.venv
+.gitignore
+.git
+.gitmodules
+.idea
+LICENSE
+mvnw
+mvnw.cmd
+pom.xml
+README.md
+statistics.py
+visualizer.py
+.env
