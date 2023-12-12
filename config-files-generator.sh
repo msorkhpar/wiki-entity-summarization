@@ -132,6 +132,13 @@ EESG_MAX_WALK_PER_NODE=200
 "
 }
 
+esger_env() {
+  echo "# Entity Summarization Graph Edge Refiner
+########################################################################
+ELESG_PICKLE_PATH=\${OUTPUT_VOLUME_PATH}/expanded-labeled-entity-summarization-graph.pkl
+"
+}
+
 initialize_env() {
   echo "*************************************"
   local env_file=$1
@@ -164,6 +171,7 @@ initialize_env "./configs/wdgb.env" wdgb_env
 initialize_env "./configs/wpap.env" wpap_env
 initialize_env "./configs/esgb.env" esgb_env
 initialize_env "./configs/esge.env" esge_env
+initialize_env "./configs/esger.env" esger_env
 
 line="id,title"
 re_file="./configs/root_entities.csv"
