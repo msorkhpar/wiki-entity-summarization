@@ -101,13 +101,71 @@ comprehensive view of these entity relationships.
 | `EESG_MAX_WALK_PER_NODE`                         | `200`                                                                    | `configs/esge.env`    | Number of paths from each target node to run                                                                                  |
 | `ELESG_PICKLE_PATH`                              | `\${OUTPUT_VOLUME_PATH}/expanded-labeled-entity-summarization-graph.pkl` | `configs/esger.env`   | Expanded labeled digraph pickle path (the final output)                                                                       |
 
-- Run the project:
-    - Provide the necessary environment variables in the `.env` file and other related to the app mode in the
-      corresponding `.env` file in the `configs` directory.
-    - Follow [wikimapper's documentation](https://github.com/jcklie/wikimapper) and place the generated sqllite file
-      inside the configs as `configs/index_enwiki.db`.
-    - Modify `configs/root_entities.csv` to include the root entities wikipedia page-id that you want to build the graph from.
-    - Run the docker-compose file:
-      ```shell
-      docker-compose up -d {container_name} # wdgb, tvwpc, wpap, esgb, esge, esger, jupyter
-      ```
+## Run the project on Docker:
+ - Provide the necessary environment variables in the `.env` file and other related to the app mode in the
+   corresponding `.env` file in the `configs` directory.
+ - Follow [wikimapper's documentation](https://github.com/jcklie/wikimapper) and place the generated sqllite file
+   inside the configs as `configs/index_enwiki.db`.
+ - Modify `configs/root_entities.csv` to include the root entities wikipedia page-id that you want to build the graph from.
+ - Run the docker-compose file:
+   ```shell
+   docker-compose up -d {container_name} # wdgb, tvwpc, wpap, esgb, esge, esger, jupyter
+   ```
+
+## Run the project on local Python environment:
+ - Provide the necessary environment variables in the `.env` file and other related to the app mode in the
+   corresponding `.env` file in the `configs` directory.
+ - Initialize the dependencies:
+   ```shell
+     poetry install --no-root
+     poetry shell
+     python -m spacy download en_core_web_md install
+   ```
+ - Follow [wikimapper's documentation](https://github.com/jcklie/wikimapper) and place the generated sqllite file
+   inside the configs as `configs/index_enwiki.db`.
+ - Modify `configs/root_entities.csv` to include the root entities wikipedia page-id that you want to build the graph from.
+ - Run main.py:
+   ```shell
+    python main.py
+    ```
+
+## Loading the dataset:
+The dataset is stored in the GitHub release as a pickle files.
+```python
+import pickle
+import networkx as nx
+
+with open('wikipedia-abstract-graph.pkl', 'rb') as f:
+    wpag = pickle.load(f)
+
+with open('entity-summarization-multi-graph.pkl', 'rb') as f:
+    esg = pickle.load(f)
+
+with open('expanded-entity-summarization-multi-graph.pkl', 'rb') as f:
+    eesg = pickle.load(f)
+
+with open('expanded-labeled-entity-summarization-graph.pkl', 'rb') as f:
+    elesg = pickle.load(f)
+
+print(next(iter(elesg.nodes(data=True))))
+'''
+('Q43416', data = {
+    'is_root': True,
+    'wikidata_id': 'Q43416',
+    'wikipedia_id': 16603,
+    'wikipedia_title': 'Keanu_Reeves',
+    'wikidata_label': 'Keanu Reeves',
+    'wikidata_description': 'Canadian actor'
+})
+'''
+
+print(next(iter(elesg.edges(data=True))))
+'''
+('Q43416', 'Q3820', data = {
+    'predicate': 'P19',
+    'is_summary': True
+ })
+ 
+ (Keanu Reeves) - (place of birth) -> (Beirut)  
+'''
+```
