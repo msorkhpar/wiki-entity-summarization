@@ -87,13 +87,13 @@ def generate_chart(G, output_path=None, title="Entity Summarization Graph", widt
 if __name__ == '__main__':
     load_dotenv(".env")
     os.makedirs(os.path.dirname(os.getenv("OUTPUT_VOLUME_PATH")), exist_ok=True)
-    load_dotenv("configs/esge.env")
-    eesg_path = os.getenv("EESG_PICKLE_PATH")
+    load_dotenv("configs/esger.env")
+    elesg_path = os.getenv("ELESG_PICKLE_PATH")
 
-    with open(eesg_path, 'rb') as f:
-        eesg = pickle.load(f)
+    with open(elesg_path, 'rb') as f:
+        elesg = pickle.load(f)
 
-    G, mapping = map_numeric_label(eesg)
+    G, mapping = map_numeric_label(elesg)
     generate_chart(
         G,
         os.getenv("OUTPUT_VOLUME_PATH"),
