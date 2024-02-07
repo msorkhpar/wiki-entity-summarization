@@ -22,6 +22,8 @@ mwparserfromhell = "^0.6.5"
 python-dotenv = "^1.0.0"
 wikimapper = "^0.2.0"
 scipy = "^1.11.4"
+wikitextparser = "^0.55.8"
+html2text = "^2020.1.16"
 
 
 [build-system]

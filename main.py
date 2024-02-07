@@ -106,7 +106,8 @@ if __name__ == '__main__':
         )
     elif app == "WPAP":
         construct_graph(
-            dumps_path=os.getenv("WIKIPEDIA_DUMPS_PATH")
+            dumps_path=os.getenv("WIKIPEDIA_DUMPS_PATH"),
+            multistream=bool(os.getenv("WIKIPEDIA_MULTISTREAM"))
         )
     elif app == "ESGE":
         construct_graph(
