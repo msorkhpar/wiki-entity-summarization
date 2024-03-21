@@ -3,16 +3,21 @@ import pickle
 
 from dotenv import load_dotenv
 from top_visited_collector.tvwpc import fetch_top_visited_wikipedia_pages
+from wikipedia_abstract_extractor.wpae import extract_wikipedia_abstracts
 from wikipedia_abstract_processor.wpap import construct_wikipedia_abstract_graph
 from graph_builder.esgb import construct_entity_summarization_graph
 from graph_expander.eesg import construct_extended_entity_summarization_graph
-from edge_refiner.esger import refine_multiple_edges
 
 __stages_order = {
     # Top Visited Wikipedia Pages Collector
     "TVWPC": {
         "previous_stage": None,
         "pickle_env_key": None
+    },
+    # Wikipedia Abstract Extractor
+    "WPAE": {
+        "previous_stage": None,
+        "function": extract_wikipedia_abstracts
     },
     # Wikipedia Abstract Processor
     "WPAP": {
@@ -31,12 +36,6 @@ __stages_order = {
         "previous_stage": "ESGB",
         "pickle_env_key": "EESG_PICKLE_PATH",
         "function": construct_extended_entity_summarization_graph
-    },
-    # Entity Summarization Graph Edge Refiner
-    "ESGER": {
-        "previous_stage": "ESGE",
-        "pickle_env_key": "ELESG_PICKLE_PATH",
-        "function": refine_multiple_edges
     },
 }
 
@@ -84,10 +83,11 @@ if __name__ == '__main__':
     app = os.getenv("APP_MODULE")
     if app is None or app not in __stages_order:
         raise ValueError(
-            f'Invalid app module should be one of the following:'
-            f'"TVWPC" Top-visited Wiki Pages Collector | "WPAP" Wikipedia Abstract Processor |'
-            f' "ESGB" Entity Summarization Graph Builder | "ESGE" Entity Summarization Graph Expander |'
-            f' "ESGER" Entity Summarization Graph Edge Refiner'
+            """Invalid app module should be one of the following:
+            "TVWPC" Top-visited Wiki Pages Collector | "WPAP" Wikipedia Abstract Extractor |
+            "WPAP" Wikipedia Abstract Processor | ESGB" Entity Summarization Graph Builder | 
+            "ESGE" Entity Summarization Graph Expander
+            """
         )
 
     for root, dirs, files in os.walk("./configs"):
@@ -103,6 +103,10 @@ if __name__ == '__main__':
             to_month=int(os.getenv("TO_MONTH")),
             from_year=int(os.getenv("FROM_YEAR")),
             from_month=int(os.getenv("FROM_MONTH"))
+        )
+    elif app == "WPAE":
+        extract_wikipedia_abstracts(
+            dumps_path=os.getenv("WIKIPEDIA_DUMPS_PATH")
         )
     elif app == "WPAP":
         construct_graph(

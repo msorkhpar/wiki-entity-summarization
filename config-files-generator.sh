@@ -42,10 +42,12 @@ DB_PORT=5432
 apps() {
   echo '
 ########## Application ##########
-# "TVWPC" Top-visited Wiki Pages Collector | "WPAP" Wikipedia Abstract Processor |
-# "ESGB" Entity Summarization Graph Builder | "ESGE" Entity Summarization Graph Expander |
-# "ESGER" Entity Summarization Graph Edge Refiner
+# "TVWPC" Top-visited Wiki Pages Collector | "WPAE" Wikipedia Abstract Extractor |
+# "WPAP" Wikipedia Abstract Processor | "ESGB" Entity Summarization Graph Builder |
+# "ESGE" Entity Summarization Graph Expander
 APP_MODULE="TVWPC"
+
+MAX_DB_CONNECTION_POOL=25
 '
 }
 
@@ -109,6 +111,13 @@ FROM_MONTH=7
 "
 }
 
+wpae_env() {
+  echo "# Wikipedia Abstract Extractor
+########################################################################
+NUM_WORKERS=20
+"
+}
+
 wpap_env() {
   echo "# Wikipedia Abstract Processor
 ########################################################################
@@ -129,13 +138,6 @@ esge_env() {
 EESG_PICKLE_PATH=\${OUTPUT_VOLUME_PATH}/expanded-entity-summarization-multi-graph.pkl
 EESG_WALK_LENGTH=3
 EESG_MAX_WALK_PER_NODE=200
-"
-}
-
-esger_env() {
-  echo "# Entity Summarization Graph Edge Refiner
-########################################################################
-ELESG_PICKLE_PATH=\${OUTPUT_VOLUME_PATH}/expanded-labeled-entity-summarization-graph.pkl
 "
 }
 
@@ -168,10 +170,10 @@ initialize_env "./configs/neo4j.env" neo4j_env
 initialize_env "./configs/jupyter.env" jupyter_env
 initialize_env "./configs/tvwpc.env" tvwpc_env
 initialize_env "./configs/wdgb.env" wdgb_env
+initialize_env "./configs/wpae.env" wpae_env
 initialize_env "./configs/wpap.env" wpap_env
 initialize_env "./configs/esgb.env" esgb_env
 initialize_env "./configs/esge.env" esge_env
-initialize_env "./configs/esger.env" esger_env
 
 line="id,title"
 re_file="./configs/root_entities.csv"

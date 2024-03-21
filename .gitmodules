@@ -19,3 +19,6 @@
 [submodule "commons"]
 	path = commons
 	url = https://github.com/msorkhpar/wiki-entity-summarization_commons
+[submodule "wikipedia_abstract_extractor"]
+	path = wikipedia_abstract_extractor
+	url = https://github.com/msorkhpar/wiki-entity-summarization_wikipedia-abstract-extractor
